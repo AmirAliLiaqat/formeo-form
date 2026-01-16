@@ -163,9 +163,7 @@ body {
   button {
     padding: 4px 8px;
     border-radius: 4px;
-    border: 1px solid #333;
-    background: #1f1f1f;
-    color: #fff;
+    border: 1px solid gray;
   }
 }
 
@@ -274,8 +272,8 @@ body {
   }
 
   pre {
-    background: #0b0b0b;
-    border: 1px solid #222;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
     border-radius: 6px;
     padding: 16px;
     overflow-x: auto;
@@ -285,7 +283,7 @@ body {
       font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
       font-size: 13px;
       line-height: 1.4;
-      color: #e6e6e6;
+      color: #333;
     }
   }
 }
@@ -343,9 +341,9 @@ body {
 }
 
 .toggle-button {
-  background-color: #151515;
-  color: #e6e6e6;
-  border: 1px solid #2b2b2b;
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
