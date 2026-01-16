@@ -10,8 +10,7 @@ html {
 }
 
 body {
-  background: #000000;
-  color: #ffffff;
+  background: linear-gradient(135deg, #e4efe9 0%, #7db9e8 100%);
   background-attachment: fixed;
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -35,11 +34,6 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-.header-inner {
-  a, label, select, option, input, button, li {
-    color: #ffffff;
-  }
-}
 
 #demo-header,
 #demo-footer {
@@ -47,12 +41,12 @@ body {
 }
 
 #demo-header {
-  background-color: #111111;
+  background-color: #efefef;
   text-align: center;
 
   nav {
     text-align: left;
-    background-color: transparent;
+    background-color: #efefef;
     display: block;
   }
 }
@@ -61,7 +55,7 @@ body {
   width: 100%;
 
   nav {
-    background-color: #111111;
+    background-color: #666;
     text-align: right;
   }
 }
@@ -290,10 +284,10 @@ body {
 
 .demo-container {
   margin-top: 20px;
-  border: 2px dashed #2b2b2b;
+  border: 2px dashed #ddd;
   border-radius: 8px;
   padding: 20px;
-  background: #0f0f0f;
+  background: #fafafa;
 
   .build-form-angular,
   .render-form-angular {
@@ -302,11 +296,67 @@ body {
   }
 
   .render-form-angular {
-    border: 1px solid #2b2b2b;
+    border: 1px solid #ddd;
     padding: 15px;
-    background: #1a1a1a;
+    background: white;
     border-radius: 4px;
   }
+}
+
+// New editor layout: left sidebar with tabs and large canvas
+.formeo-editor-shell {
+  display: flex;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.formeo-sidebar {
+  width: 260px;
+  background: #f7f7f8;
+  border-right: 1px solid #e9e9eb;
+  padding: 18px;
+}
+
+.formeo-sidebar .tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.formeo-sidebar .tab {
+  flex: 1;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.formeo-canvas-wrap {
+  flex: 1;
+  padding: 28px;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg,#fff,#fbfbfc);
+}
+
+.formeo-canvas {
+  width: 100%;
+  max-width: 900px;
+  min-height: 420px;
+  border: 1px dashed #e6e6ea;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa0a6;
 }
 
 .error-message {
