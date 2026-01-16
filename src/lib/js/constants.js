@@ -1,0 +1,238 @@
+import pkg from '../../../package.json' with { type: 'json' }
+import { uuid } from './common/utils/index.mjs'
+
+export { default as BUNDLED_SVG_SPRITE } from '../../lib/icons/formeo-sprite.svg?raw'
+
+const name = pkg.name
+export const version = pkg.version
+export const PACKAGE_NAME = name
+export const formeoSpriteId = 'formeo-sprite'
+
+export const POLYFILLS = [
+  { name: 'cssPreload', src: '//cdnjs.cloudflare.com/ajax/libs/loadCSS/2.0.1/cssrelpreload.min.js' },
+  { name: 'mutationObserver', src: '//cdn.jsdelivr.net/npm/mutationobserver-shim/dist/mutationobserver.min.js' },
+  { name: 'fetch', src: 'https://unpkg.com/unfetch/polyfill' },
+]
+export const SVG_SPRITE_URL = null // No longer fetching by default - using bundled sprite
+export const FALLBACK_SVG_SPRITE_URL = `https://cdn.jsdelivr.net/npm/formeo@${version}/dist/${formeoSpriteId}.svg`
+export const CSS_URL = `https://cdn.jsdelivr.net/npm/formeo@${version}/dist/formeo.min.css`
+export const FALLBACK_CSS_URL = 'https://draggable.github.io/formeo/assets/css/formeo.min.css'
+
+export const PANEL_CLASSNAME = 'f-panel'
+export const CONTROL_GROUP_CLASSNAME = 'control-group'
+export const STAGE_CLASSNAME = `${PACKAGE_NAME}-stage`
+export const ROW_CLASSNAME = `${PACKAGE_NAME}-row`
+export const COLUMN_CLASSNAME = `${PACKAGE_NAME}-column`
+export const FIELD_CLASSNAME = `${PACKAGE_NAME}-field`
+
+export const CUSTOM_COLUMN_OPTION_CLASSNAME = 'custom-column-widths'
+export const COLUMN_PRESET_CLASSNAME = 'column-preset'
+export const COLUMN_RESIZE_CLASSNAME = 'resizing-columns'
+
+export const CHILD_CLASSNAME_MAP = new Map([
+  [STAGE_CLASSNAME, ROW_CLASSNAME],
+  [ROW_CLASSNAME, COLUMN_CLASSNAME],
+  [COLUMN_CLASSNAME, FIELD_CLASSNAME],
+])
+
+export const INTERNAL_COMPONENT_TYPES = ['stage', 'row', 'column', 'field']
+export const INTERNAL_COMPONENT_INDEX_TYPES = INTERNAL_COMPONENT_TYPES.map(type => `${type}s`)
+export const INTERNAL_COMPONENT_INDEX_TYPE_MAP = new Map(
+  INTERNAL_COMPONENT_INDEX_TYPES.map((type, index) => [type, INTERNAL_COMPONENT_TYPES[index]])
+)
+export const INTERNAL_COMPONENT_INDEX_REGEX = new RegExp(`^${INTERNAL_COMPONENT_INDEX_TYPES.join('|')}.`)
+
+export const COMPONENT_TYPES = [...INTERNAL_COMPONENT_TYPES]
+export const COMPONENT_INDEX_TYPES = [...INTERNAL_COMPONENT_INDEX_TYPES]
+export const COMPONENT_INDEX_TYPE_MAP = new Map(
+  COMPONENT_INDEX_TYPES.map((type, index) => [type, COMPONENT_TYPES[index]])
+)
+export const COMPONENT_INDEX_REGEX = new RegExp(`^${COMPONENT_INDEX_TYPES.join('|')}.`)
+
+export const COMPONENT_TYPE_MAP = COMPONENT_TYPES.reduce((acc, type) => {
+  acc[type] = type
+  return acc
+}, {})
+
+export const COMPONENT_TYPE_CONFIGS = [
+  { name: 'controls', className: CONTROL_GROUP_CLASSNAME },
+  { name: 'stage', className: STAGE_CLASSNAME },
+  { name: 'row', className: ROW_CLASSNAME },
+  { name: 'column', className: COLUMN_CLASSNAME },
+  { name: 'field', className: FIELD_CLASSNAME },
+]
+
+export const COMPONENT_TYPE_CLASSNAMES = {
+  controls: CONTROL_GROUP_CLASSNAME,
+  stage: STAGE_CLASSNAME,
+  row: ROW_CLASSNAME,
+  column: COLUMN_CLASSNAME,
+  field: FIELD_CLASSNAME,
+}
+
+export const COMPONENT_TYPE_CLASSNAMES_LOOKUP = Object.entries(COMPONENT_TYPE_CLASSNAMES).reduce(
+  (acc, [type, className]) => {
+    acc[className] = type
+    return acc
+  },
+  {}
+)
+
+export const COMPONENT_TYPE_CLASSNAMES_ARRAY = Object.values(COMPONENT_TYPE_CLASSNAMES)
+export const COMPONENT_TYPE_CLASSNAMES_REGEXP = new RegExp(`${COMPONENT_TYPE_CLASSNAMES_ARRAY.join('|')}`, 'g')
+
+const { childTypeMapVals, childTypeIndexMapVals } = COMPONENT_TYPE_CONFIGS.reduce(
+  (acc, { name }, index, arr) => {
+    const { name: childName } = arr[index + 1] || {}
+    if (childName) {
+      acc.childTypeMapVals.push([name, childName])
+      acc.childTypeIndexMapVals.push([`${name}s`, `${childName}s`])
+    }
+
+    return acc
+  },
+  { childTypeMapVals: [], childTypeIndexMapVals: [] }
+)
+
+const parentTypeMap = childTypeMapVals
+  .slice()
+  .map(typeMap => typeMap.slice().reverse())
+  .reverse()
+
+export const CHILD_TYPE_MAP = new Map(childTypeMapVals)
+export const CHILD_TYPE_INDEX_MAP = new Map(childTypeIndexMapVals)
+
+export const PARENT_TYPE_MAP = new Map(parentTypeMap.slice())
+
+export const TYPE_CHILD_CLASSNAME_MAP = new Map([
+  ['stage', ROW_CLASSNAME],
+  ['row', COLUMN_CLASSNAME],
+  ['column', FIELD_CLASSNAME],
+])
+
+const columnTemplates = [
+  [{ value: '100.0', label: '100%' }],
+  [
+    { value: '50.0,50.0', label: '50 | 50' },
+    { value: '33.3,66.6', label: '33 | 66' },
+    { value: '66.6,33.3', label: '66 | 33' },
+  ],
+  [
+    { value: '33.3,33.3,33.3', label: '33 | 33 | 33' },
+    { value: '25.0,25.0,50.0', label: '25 | 25 | 50' },
+    { value: '50.0,25.0,25.0', label: '50 | 25 | 25' },
+    { value: '25.0,50.0,25.0', label: '25 | 50 | 25' },
+  ],
+  [{ value: '25.0,25.0,25.0,25.0', label: '25 | 25 | 25 | 25' }],
+  [{ value: '20.0,20.0,20.0,20.0,20.0', label: '20 | 20 | 20 | 20 | 20' }],
+  [{ value: '16.66,16.66,16.66,16.66,16.66,16.66', label: '16.66 | 16.66 | 16.66 | 16.66 | 16.66 | 16.66' }],
+]
+
+export const COLUMN_TEMPLATES = new Map(
+  columnTemplates.reduce((acc, cur, idx) => {
+    acc.push([idx, cur])
+    return acc
+  }, [])
+)
+
+export const SESSION_FORMDATA_KEY = `${name}-formData`
+export const SESSION_LOCALE_KEY = `${name}-locale`
+
+export const ANIMATION_SPEED_BASE = 333
+export const ANIMATION_SPEED_FAST = Math.round(ANIMATION_SPEED_BASE / 2)
+export const ANIMATION_SPEED_SLOW = Math.round(ANIMATION_SPEED_BASE * 2)
+export const ANIMATION_SPEED_SUPER_FAST = Math.round(ANIMATION_SPEED_BASE / 5)
+
+//  Event constants
+export const EVENT_FORMEO_SAVED = 'formeoSaved'
+export const EVENT_FORMEO_UPDATED = 'formeoUpdated'
+export const EVENT_FORMEO_CHANGED = 'formeoChanged'
+export const EVENT_FORMEO_UPDATED_STAGE = 'formeoUpdatedStage'
+export const EVENT_FORMEO_UPDATED_ROW = 'formeoUpdatedRow'
+export const EVENT_FORMEO_UPDATED_COLUMN = 'formeoUpdatedColumn'
+export const EVENT_FORMEO_UPDATED_FIELD = 'formeoUpdatedField'
+export const EVENT_FORMEO_CLEARED = 'formeoCleared'
+export const EVENT_FORMEO_ON_RENDER = 'formeoOnRender'
+export const EVENT_FORMEO_CONDITION_UPDATED = 'formeoConditionUpdated'
+export const EVENT_FORMEO_ADDED_ROW = 'formeoAddedRow'
+export const EVENT_FORMEO_ADDED_COLUMN = 'formeoAddedColumn'
+export const EVENT_FORMEO_ADDED_FIELD = 'formeoAddedField'
+export const EVENT_FORMEO_REMOVED_ROW = 'formeoRemovedRow'
+export const EVENT_FORMEO_REMOVED_COLUMN = 'formeoRemovedColumn'
+export const EVENT_FORMEO_REMOVED_FIELD = 'formeoRemovedField'
+export const COMPARISON_OPERATORS = {
+  equals: '==',
+  notEquals: '!=',
+  contains: '⊃',
+  notContains: '!⊃',
+}
+export const LOGICAL_OPERATORS = {
+  and: '&&',
+  or: '||',
+}
+export const ASSIGNMENT_OPERATORS = {
+  equals: '=',
+}
+export const CONDITION_INPUT_ORDER = [
+  'logical',
+  'source',
+  'sourceProperty',
+  'comparison',
+  'target',
+  'targetProperty',
+  'assignment',
+  'value',
+]
+export const CHECKABLE_OPTIONS = ['isChecked', 'isNotChecked']
+export const VISIBLE_OPTIONS = ['isVisible', 'isNotVisible']
+export const PROPERTY_OPTIONS = ['value']
+
+export const OPERATORS = {
+  comparison: COMPARISON_OPERATORS,
+  assignment: ASSIGNMENT_OPERATORS,
+  logical: LOGICAL_OPERATORS,
+}
+
+export const conditionTypeIf = 'if'
+export const conditionTypeThen = 'then'
+
+export const CONDITION_TEMPLATE = () => ({
+  [conditionTypeIf]: [
+    {
+      source: '',
+      sourceProperty: '',
+      comparison: '',
+      target: '',
+      targetProperty: '',
+    },
+  ],
+  [conditionTypeThen]: [
+    {
+      target: '',
+      targetProperty: '',
+      assignment: '',
+      value: '',
+    },
+  ],
+})
+
+export const UUID_REGEXP = /(\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b)|(\b[0-9a-f]{8}\b)/g
+
+export const bsColRegExp = /\bcol-\w+-\d+/g
+
+export const iconPrefix = 'f-i-'
+
+export const DEFAULT_FORMDATA = () => ({
+  id: uuid(),
+  stages: { [uuid()]: {} },
+  rows: {},
+  columns: {},
+  fields: {},
+})
+
+export const CHECKED_TYPES = ['selected', 'checked']
+export const REVERSED_CHECKED_TYPES = CHECKED_TYPES.toReversed()
+
+export const FILTERED_PANEL_DATA_KEYS = new Map([
+  ['config', new Set(['label', 'helpText', 'hideLabel', 'labelAfter', 'disableHtmlLabel', 'tooltip'])],
+])

@@ -1,0 +1,38 @@
+@use "../mixins";
+@use "../variables" as var;
+
+.formeo-row {
+  &::before {
+    border-bottom-left-radius: var.$border-radius;
+    border-bottom-right-radius: 0;
+    right: 0;
+    left: auto;
+  }
+
+  &:first-child {
+    border-top-left-radius: var.$border-radius;
+    border-top-right-radius: 0;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: var.$border-radius;
+    border-bottom-right-radius: var.$border-radius;
+  }
+
+  &.hovering-row {
+    &:first-child {
+      border-top-left-radius: 0;
+    }
+
+    &::before {
+      border-left-width: 1px;
+    }
+  }
+
+  &.empty {
+    &::after {
+      left: 0;
+      right: auto;
+    }
+  }
+}

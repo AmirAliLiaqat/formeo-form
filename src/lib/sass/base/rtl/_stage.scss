@@ -1,0 +1,11 @@
+@use "../mixins";
+@use "../variables";
+
+.formeo-stage-wrap {
+  float: right;
+
+  .formeo-stage {
+    padding-left: mixins.space();
+    padding-right: variables.$icon-size - 1;
+  }
+}

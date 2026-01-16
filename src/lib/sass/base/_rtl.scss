@@ -1,0 +1,9 @@
+@use "sass:meta";
+[dir='rtl'] {
+  @include meta.load-css('rtl/mixins');
+  @include meta.load-css('rtl/bs');
+  @include meta.load-css('rtl/controls');
+  @include meta.load-css('rtl/stage');
+  @include meta.load-css('rtl/row');
+  @include meta.load-css('rtl/group-actions');
+}

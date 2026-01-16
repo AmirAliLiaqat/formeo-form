@@ -1,0 +1,177 @@
+@use '../base/colors' as color;
+@use '../base/variables' as var;
+
+@use 'group-actions';
+@use 'row';
+@use 'row-edit';
+@use 'column';
+@use 'field';
+@use 'field-edit';
+@use '../base/mixins';
+
+.formeo-stage {
+  width: 73%;
+  box-sizing: border-box;
+  transition: width 250ms;
+  margin-right: mixins.space();
+  flex: 1 1 auto;
+  position: relative;
+  transition-property: background-color, border;
+  transition-duration: var.$animation-speed-base, var.$animation-speed-base;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: transparent;
+  background-color: color.$stage-background;
+  padding-left: var.$action-btn-width - 1;
+  padding-bottom: mixins.space(1);
+  overflow: visible;
+  border-radius: mixins.space(1) 0 mixins.space(1) mixins.space(1);
+
+  >.children {
+    @include mixins.display-column;
+    gap: var.$component-gap;
+    min-height: 100%;
+  }
+
+  &.removing-all-fields {
+    .formeo-row {
+      transition: margin-top 250ms ease-in;
+    }
+  }
+
+  &>.formeo-field {
+    background-color: color.$white;
+  }
+
+  @include mixins.no-list-style;
+
+  @include mixins.breakpoint('phone-lrg') {
+    width: calc(100% - 50px);
+  }
+
+  &.highlight-component {
+    box-shadow: 0 0 mixins.space() 2px color.$stage-outline-color;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  &.empty {
+    border-color: color.$gray-light;
+    background-color: color.$shadow;
+  }
+
+  &.editing-stage,
+  &.hovering-stage,
+  &.hovering-stage.empty {
+    border-color: color.$stage-outline-color;
+    border-style: solid;
+
+    .stage-tag {
+      display: flex;
+    }
+
+    .stage-action-btn-wrap {
+      display: flex;
+      border-top-right-radius: 8px;
+    }
+
+    .stage-handle {
+      display: none;
+    }
+
+    .formeo-row {
+      box-shadow: none;
+    }
+  }
+}
+
+.stage-tag {
+  border: 0 none;
+  border: inherit;
+  display: none;
+  left: auto;
+  overflow: hidden;
+  padding: 0 var.$action-btn-width + mixins.space(1) 2px mixins.space(1);
+  right: -1px;
+  // top: -23px;
+  transition: width var.$animation-speed-base ease-in-out;
+  width: auto;
+  border-bottom-width: 0;
+}
+
+.stage-edit {
+  padding: mixins.space(2);
+  background-color: color.$white;
+  margin-top: 0;
+  margin-bottom: mixins.space(2);
+  border-top-left-radius: mixins.space(1);
+
+  .panel-nav {
+    border-bottom: 0 none !important;
+  }
+
+  .conditions-prop-inputs {
+    border-top: 1px solid color.$gray-lighter;
+  }
+}
+
+.stage-actions {
+  right: -1px;
+  top: -(var.$prop-btn-width);
+  text-align: right;
+  border-bottom-left-radius: var.$input-border-radius;
+  border-bottom-right-radius: 0;
+  border-width: 0;
+
+  .edit-toggle,
+  .edit-toggle:focus {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 1px solid color.$stage-outline-color;
+    border-top-left-radius: 0;
+    border-top-right-radius: mixins.space(1);
+    border-top: 1px solid color.$stage-outline-color;
+  }
+}
+
+.editing-stage {
+  .formeo-settings {
+    display: block;
+  }
+
+  .formeo-stage {
+    display: none;
+  }
+}
+
+.f-field-group {
+  margin-bottom: 0;
+}
+
+[class$='empty'] {
+  &[class*='editing-'] {
+    &::after {
+      opacity: 0;
+    }
+  }
+
+  &::after {
+    opacity: 1;
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: color.$gray-light;
+    transition: opacity 200ms ease-in-out;
+    will-change: opacity;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    content: attr(data-hover-tag);
+  }
+}
+
+.formeo-settings {
+  display: none;
+}

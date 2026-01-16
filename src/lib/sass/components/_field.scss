@@ -1,0 +1,169 @@
+@use "../base/mixins";
+@use "../base/colors" as color;
+@use "../base/variables" as var;
+
+.formeo-field {
+  min-height: mixins.space(3) + 2;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  will-change: box-shadow;
+
+  &.highlight-component {
+    box-shadow: 0 0 mixins.space() 2px color.$field-outline-color;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: var.$input-border-radius;
+    border-bottom-left-radius: var.$input-border-radius;
+  }
+
+  &.first-field {
+    border-top-right-radius: var.$input-border-radius;
+
+    .field-actions {
+      border-top-right-radius: var.$input-border-radius;
+    }
+  }
+
+  .prev-label {
+    min-height: var.$icon-size;
+    max-width: calc(100% - #{var.$icon-size});
+    margin-bottom: var.$input-border-radius;
+
+    input {
+      width: auto;
+    }
+  }
+
+  [contenteditable] {
+    padding: 1px 2px;
+    user-select: text;
+    display: inline-block;
+    position: relative;
+    min-width: var.$icon-size;
+
+    &::after {
+      content: "";
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-bottom: 1px dashed color.$gray-lighter;
+    }
+
+    &:focus {
+      border-radius: var.$input-border-radius;
+      border-bottom-color: transparent;
+      outline: none;
+      box-shadow: 0 0 0 1px color.$input-focus inset;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .form-check {
+    margin-left: 1.25em;
+  }
+
+  .form-check-input:only-child {
+    position: absolute;
+  }
+
+  &.field-type-hidden {
+    border: 1px dashed color.$gray-lighter;
+  }
+
+  &.sortable-ghost {
+    background-color: color.$field-highlight-color;
+    box-shadow: 0 0 0 1px color.$field-outline-color;
+
+    * {
+      opacity: 0;
+    }
+  }
+}
+
+.field-tag {
+  right: -1px;
+  left: auto;
+  top: -(var.$icon-size);
+
+  border-color: color.$field-outline-color;
+  background-color: color.$white;
+
+
+}
+
+.editing-field,
+.hovering-field {
+  box-shadow: 0 0 0 1px color.$field-outline-color;
+
+  .field-tag {
+    display: flex;
+  }
+
+  .field-action-btn-wrap {
+    display: flex;
+  }
+
+  .field-handle {
+    display: none;
+  }
+}
+
+.field-actions {
+  border-color: transparent;
+  border-width: 1px 1px 0 0;
+  border-style: solid;
+
+  right: 0;
+  text-align: right;
+  border-bottom-left-radius: var.$input-border-radius;
+  border-bottom-right-radius: 0;
+
+  .action-btn-wrap {
+    flex-direction: row-reverse;
+  }
+}
+
+.field-moving {
+  background-color: color.$field-highlight-color;
+
+  .action-btn-wrap {
+    button {
+      background-color: color.$field-highlight-color;
+    }
+  }
+
+  .field-tag {
+    background-color: color.$field-highlight-color;
+
+
+  }
+}
+
+.editing-field {
+  z-index: 1;
+}
+
+.editing-field-preview {
+  .field-actions {
+    display: none;
+  }
+}
+
+.field-preview {
+  p {
+    white-space: normal;
+  }
+
+  .f-checkbox,
+  .f-radio {
+    &.highlight-component {
+      box-shadow: 0 0 2px 1px color.$option-outline-color inset;
+    }
+  }
+}

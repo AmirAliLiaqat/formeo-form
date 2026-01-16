@@ -1,0 +1,169 @@
+@use "../base/mixins";
+
+@use "../base/colors" as color;
+@use "../base/variables" as var;
+
+.formeo-row {
+  >.children {
+    @include mixins.display-row;
+    gap: var.$component-gap;
+    min-height: mixins.space(4);
+  }
+
+  transition: background-color 125ms ease-in-out;
+  position: relative;
+  clear: both;
+  background-color: color.$white;
+  box-shadow: 0 0 0 1px color.$gray-lighter;
+  padding: mixins.space(2);
+
+  &::after {
+    clear: both;
+  }
+
+  &.control-ghost {
+    padding: 10px;
+  }
+
+  &:first-child {
+    &:not(.editing-row, .hovering-row) {
+      border-top-left-radius: var.$border-radius;
+    }
+
+    border-top-right-radius: var.$border-radius;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: var.$border-radius;
+    border-bottom-right-radius: var.$border-radius;
+  }
+
+  &:only-child {
+    border-radius: var.$border-radius;
+  }
+
+  &.resizing-columns {
+    .formeo-column {
+      transition: none;
+    }
+  }
+
+  &.empty {
+    &::after {
+      left: 0;
+      transform: translate(mixins.space(1), -50%);
+    }
+  }
+
+  .layout-row-control {
+    display: none;
+  }
+
+  .row-tag {
+    left: -1px;
+    border-color: color.$row-outline-color;
+
+
+  }
+
+  &:has(.hovering-column) {
+
+    .row-actions,
+    .field-actions {
+      display: none;
+    }
+  }
+
+  &.sortable-ghost {
+    background-color: color.$row-highlight-color;
+    box-shadow: 0 0 0 1px color.$row-outline-color;
+
+    * {
+      opacity: 0;
+    }
+  }
+
+  &:has(.editing-field) {
+    .row-actions {
+      display: none;
+    }
+  }
+
+
+  &.highlight-component {
+    box-shadow: 0 0 mixins.space() 2px color.$row-outline-color;
+  }
+}
+
+.row-moving {
+  background-color: color.$row-highlight-color !important;
+
+  .action-btn-wrap {
+    button {
+      background-color: color.$row-highlight-color;
+    }
+  }
+
+  .row-tag {
+    background-color: color.$row-highlight-color;
+
+
+  }
+}
+
+.row-actions {
+  left: 0;
+}
+
+.hovering-row {
+
+  .column-actions,
+  .field-actions {
+    display: none;
+  }
+
+  &.editing-row {
+    &::before {
+      border-right-width: 0;
+    }
+  }
+}
+
+.editing-row {
+  display: block;
+
+  .row-edit {
+    display: block;
+  }
+
+  &.hovering-row {
+    .formeo-column {
+      opacity: 1;
+    }
+  }
+}
+
+.hovering-row,
+.editing-row {
+  box-shadow: 0 0 0 1px color.$row-outline-color;
+
+  &:first-child {
+    border-top-left-radius: 0;
+  }
+
+  .row-handle {
+    display: none;
+  }
+
+  .row-tag {
+    display: flex;
+  }
+
+  .row-action-btn-wrap {
+    display: flex;
+
+    button:last-child {
+      border-bottom-right-radius: var.$border-radius;
+    }
+  }
+}

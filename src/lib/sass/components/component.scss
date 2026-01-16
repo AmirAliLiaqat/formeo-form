@@ -1,0 +1,37 @@
+@use "../base/mixins";
+@use "../base/colors" as color;
+@use "../base/variables" as var;
+@use "../base/animation";
+
+.component-tag {
+  display: none;
+  height: var.$icon-size;
+
+  flex-direction: row;
+  gap: var.$half-space;
+  align-items: center;
+  position: absolute;
+  font-size: 0.8em;
+
+  padding: 0 var.$base-space;
+  left: 50%;
+  top: -(var.$icon-size);
+  border-top-left-radius: var.$border-radius;
+  border-top-right-radius: var.$border-radius;
+  background-color: color.$white;
+  border-color: color.$gray-lighter;
+  border-style: solid;
+  border-width: 1px 1px 0 1px;
+
+  [class*="-handle-"] {
+    width: calc(var.$half-space * 3);
+    height: calc(var.$half-space * 3);
+  }
+
+
+}
+
+.children {
+  @include mixins.no-list-style;
+  // height: 100%;
+}

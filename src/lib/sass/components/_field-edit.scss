@@ -1,0 +1,556 @@
+@use '../base/mixins';
+
+@use '../base/colors' as color;
+@use '../base/variables' as var;
+
+.component-edit {
+  display: none;
+  overflow: hidden;
+
+  label {
+    font-size: 0.825em;
+  }
+
+  .panel-nav {
+    margin-bottom: 0;
+    padding: 0;
+    overflow: hidden;
+
+    button {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .component-prop {
+    display: flex;
+    gap: mixins.space(1);
+  }
+
+  .prop-controls {
+    flex-shrink: 0;
+    align-items: center;
+    display: flex;
+
+    .prop-remove {
+      z-index: 3;
+    }
+
+    &.conditions-prop-controls {
+      display: flex;
+      align-items: flex-start;
+      margin-left: mixins.space(2);
+      min-width: mixins.space(2);
+
+      .prop-remove {
+        margin-top: -1px;
+      }
+    }
+
+    button {
+      position: relative;
+    }
+
+    .svg-icon {
+      width: 10px;
+      height: 10px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .prop-control {
+    width: mixins.space(2);
+    height: mixins.space(2);
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 0;
+
+    @for $i from 1 through 4 {
+      &:nth-of-type(#{$i}) {
+        right: $i * var.$prop-btn-width - var.$prop-btn-width;
+      }
+    }
+
+    &:first-child {
+      right: 0;
+    }
+
+    :not(.control-count-1) & {
+      &:last-child {
+        border-radius: var.$input-border-radius 0 0 var.$input-border-radius;
+        display: none;
+      }
+
+      &:first-child {
+        border-radius: var.$input-border-radius;
+      }
+    }
+
+    &:hover {
+      &:first-child {
+        border-radius: 0 var.$input-border-radius var.$input-border-radius 0;
+
+        &:last-child {
+          border-radius: var.$input-border-radius;
+        }
+      }
+
+      &:last-child {
+        display: inline-block;
+      }
+    }
+
+    &:last-child:first-child {
+      display: inline-block;
+      border-radius: var.$input-border-radius;
+      margin-right: 0;
+    }
+
+  }
+
+  .to-remove {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(color.$brand-error, 0.1);
+      z-index: 2;
+    }
+  }
+
+  .prop-wrap {
+    position: relative;
+    margin-bottom: mixins.space(2);
+    list-style: none;
+    margin-left: 0;
+
+
+
+
+    &:first-child {
+      .conditions-prop-controls {
+        .prop-remove {
+          display: none;
+        }
+      }
+    }
+
+  }
+
+  .field-edit-group {
+    padding: mixins.space(1) mixins.space(1) 0;
+  }
+
+  [contenteditable] {
+    @include mixins.display-row;
+  }
+
+  .prop-inputs,
+  .prop-controls {
+    transition:
+      width 150ms,
+      display 150ms;
+    will-change: width;
+
+    .f-addon,
+    input:not([type='checkbox']):not([type='radio']),
+    select,
+    textarea,
+    [contenteditable] {
+      font-size: 0.825em;
+
+      &:focus {
+        z-index: 1;
+      }
+    }
+  }
+
+  [disabled] {
+    .f-input-wrap & {
+      display: none;
+    }
+  }
+
+
+  .f-input-wrap {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+
+    &.disabled-prop {
+      display: none;
+    }
+
+    &.locked-prop {
+      pointer-events: none;
+      opacity: 0.7;
+
+      select {
+        background-image: none;
+      }
+    }
+  }
+
+  .control-count-2 {
+    .prop-controls {
+      &:hover {
+        width: var.$prop-btn-width * 2;
+
+        +.prop-inputs {
+          width: calc(100% - #{var.$prop-btn-width});
+        }
+      }
+    }
+  }
+
+  &.panel-count-1 {
+    .panel-nav {
+      border-bottom: 1px solid color.$gray-light;
+
+      button {
+        display: none;
+      }
+    }
+
+    .panel-labels {
+      background-color: transparent;
+    }
+  }
+
+  &[popover] {
+    display: block;
+    width: 66.7%;
+    height: 66.7%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 mixins.space(3) 1px #000;
+    border: 1px solid #000;
+    border-radius: mixins.space(1);
+    z-index: 100;
+  }
+}
+
+.f-condition-row {
+  display: flex;
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid color.$gray-lighter;
+
+  >[class^='condition-'] {
+    border-left: 1px solid color.$gray-lighter;
+  }
+
+  .manage-condition-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: mixins.space(2);
+    height: mixins.space(2);
+    padding: 0;
+    right: -16px;
+    position: absolute;
+    box-shadow: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    z-index: 1;
+  }
+
+  .remove-condition-type {
+    top: 0;
+  }
+
+  .add-condition-type {
+    bottom: 0;
+    display: none;
+  }
+
+  &:last-child {
+    .remove-condition-type {
+      border-bottom-right-radius: 0;
+    }
+
+    .add-condition-type {
+      display: flex;
+    }
+
+    &:not(:first-child) {
+      .add-condition-type {
+        border-top-right-radius: 0;
+      }
+    }
+  }
+
+  input,
+  select,
+  [contenteditable] {
+    background-color: color.$white;
+    border: 0 none;
+    border-radius: 0;
+
+    &:focus {
+      box-shadow: 0 0 0 1px color.$input-focus inset;
+    }
+  }
+
+  div.condition-source,
+  div.condition-target {
+    position: relative;
+    border-left: 1px solid color.$gray-lighter;
+  }
+
+  .condition-logical,
+  .condition-source,
+  .condition-target,
+  .condition-sourceProperty,
+  .condition-targetProperty,
+  .condition-comparison,
+  .condition-assignment,
+  .condition-value {
+    flex: 1 !important;
+    max-width: 100%;
+    transition: max-width var.$animation-speed-base;
+    will-change: max-width;
+    min-height: 31px;
+  }
+
+  .condition-logical {
+    max-width: mixins.space(8);
+    text-transform: uppercase;
+  }
+
+  .condition-source,
+  .condition-target {
+    // max-width: 50%;
+
+    input[type='text'] {
+      min-height: 31px;
+    }
+  }
+
+  .hidden-property {
+    max-width: 0% !important;
+    padding: 0;
+    border: 0 none;
+    overflow: hidden;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  &.display-none {
+    display: none;
+  }
+
+  .hidden-option {
+    display: none;
+  }
+}
+
+.type-conditions-wrap {
+  width: 100%;
+}
+
+.then-condition-row {
+  &:first-of-type {
+    .remove-condition-type {
+      display: none;
+    }
+  }
+}
+
+.if-condition-row {
+  &:first-of-type {
+    .remove-condition-type {
+      display: none;
+    }
+  }
+
+  .condition-target {
+    input {
+      border-top-right-radius: mixins.space();
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.condition-target,
+.condition-source {
+  input.f-autocomplete-display-field:placeholder-shown+span.clear-button {
+    display: none;
+  }
+
+  .clear-button {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    padding: mixins.space();
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .svg-icon {
+      width: mixins.space(1) + mixins.space();
+      height: mixins.space(1) + mixins.space();
+      border-radius: 50%;
+      padding: 1px;
+      border: 1px solid color.$gray-dark;
+      fill: color.$gray-dark;
+    }
+
+    &:hover {
+      .svg-icon {
+        border: 1px solid color.$brand-error;
+        fill: color.$brand-error;
+      }
+    }
+
+    &:active {
+      .svg-icon {
+        background-color: color.$brand-error;
+        border: 1px solid color.$brand-error-dark;
+        fill: color.$white;
+      }
+    }
+  }
+}
+
+.conditions-prop-inputs {
+  border-top: 1px solid color.$gray-lighter;
+  border-right: 1px solid color.$gray-lighter;
+
+  label.condition-label {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    padding: mixins.space();
+    border-right: 0;
+    text-transform: uppercase;
+    color: color.$gray-dark;
+    background-color: color.$white;
+
+    &.then-condition-label {
+      background-color: color.$gray;
+      color: color.$white;
+    }
+  }
+}
+
+.field-conditions-0 {
+  .conditions-prop-inputs {
+    border-top: 0 none;
+  }
+}
+
+.edit-group {
+  @include mixins.no-list-style;
+}
+
+.options-panel {
+  .prop-wrap {
+    margin-bottom: mixins.space(1);
+  }
+
+  .input-group-addon {
+    line-height: 0;
+  }
+
+  .prop-labels {
+    padding: mixins.space(1) 34px mixins.space(1) mixins.space(1);
+
+    .input-group-addon {
+      font-size: 12px;
+    }
+
+    label {
+      font-size: 12px;
+      width: 50%;
+      position: relative;
+      display: table-cell;
+    }
+  }
+
+  .prop-label-selected,
+  .prop-label-disabled {
+    width: 1% !important;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 0 none;
+    background-color: transparent;
+  }
+}
+
+.panel-action-buttons {
+
+  display: flex;
+  justify-content: end;
+  gap: mixins.space(1);
+  padding: 0 mixins.space(1) mixins.space(1);
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: mixins.space(3);
+    gap: mixins.space(0.5);
+  }
+
+  .svg-icon {
+    height: mixins.space(2);
+  }
+
+
+  [class^='add-'] {
+    float: right;
+  }
+}
+
+.prop-inputs {
+  width: 100%;
+  align-items: center;
+  vertical-align: bottom;
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+
+  &.conditions-prop-inputs {
+    flex-direction: column;
+  }
+
+  .f-field-group {
+    width: 100%;
+    margin-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .f-addon {
+    display: flex;
+    align-items: center;
+    flex: 0;
+
+    input {
+      margin: 0;
+    }
+  }
+
+  label {
+    padding-right: 1em;
+    margin-bottom: 0;
+  }
+
+
+}

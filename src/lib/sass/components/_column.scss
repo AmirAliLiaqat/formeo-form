@@ -1,0 +1,235 @@
+@use "sass:color" as sass-color;
+@use "../base/mixins";
+
+@use "../base/colors" as color;
+@use "../base/variables" as var;
+
+.formeo-column {
+  @include mixins.no-list-style;
+
+  transition: width var.$animation-speed-base;
+  position: relative;
+  flex-direction: column;
+  will-change: width;
+  max-width: 100%;
+
+  >.children {
+    @include mixins.display-column;
+    gap: var.$component-gap;
+  }
+
+  .column-tag {
+    border-color: color.$column-outline-color;
+  }
+
+  .column-tag,
+  .column-actions {
+    transform: translateX(-50%);
+  }
+
+  &[class*="col-"] {
+    padding: 0;
+  }
+
+  &:first-child {
+    border-bottom-left-radius: var.$border-radius;
+  }
+
+  &:last-child {
+    border-bottom-right-radius: var.$border-radius;
+
+    .resize-x-handle {
+      display: none !important;
+    }
+  }
+
+  &:only-child {
+    border-bottom-right-radius: var.$border-radius;
+    border-bottom-left-radius: var.$border-radius;
+
+    .resize-x-handle {
+      display: none !important;
+    }
+  }
+
+  .resize-x-handle {
+    display: none;
+    position: absolute;
+    right: -(var.$component-gap);
+    top: 0;
+    bottom: 0;
+    width: mixins.space(2);
+    z-index: 2;
+    cursor: ew-resize;
+
+    &::before {
+      width: 0;
+      right: 6px;
+      border: 1px dashed sass-color.adjust(color.$column-outline-color, $lightness: 15%);
+      border-width: 0 2px;
+      display: block;
+      top: 0;
+      position: absolute;
+      height: 100%;
+      content: "";
+    }
+
+    svg {
+      fill: sass-color.adjust(color.$column-outline-color, $lightness: 15%);
+      position: absolute;
+      right: 1px;
+      width: 14px;
+
+      &.f-i-triangle-down {
+        top: -14px;
+      }
+
+      &.f-i-triangle-up {
+        bottom: -14px;
+      }
+    }
+
+    &:hover {
+      &::before {
+        border-color: color.$column-outline-color;
+      }
+
+      svg {
+        fill: color.$column-outline-color;
+      }
+    }
+  }
+
+  &.editing-column {
+    overflow: hidden;
+
+    .column-edit {
+      display: block;
+    }
+  }
+
+  &:has(.hovering-field) {
+    .column-actions {
+      display: none;
+    }
+  }
+
+  &.sortable-ghost {
+    background-color: color.$column-highlight-color;
+    box-shadow: 0 0 0 1px color.$column-outline-color;
+
+    * {
+      opacity: 0;
+    }
+  }
+
+  &:has(.editing-field) {
+    .column-actions {
+      display: none;
+    }
+  }
+
+  &.highlight-component {
+    box-shadow: 0 0 mixins.space() 2px color.$column-outline-color;
+  }
+}
+
+// this is column styleing in the row edit window
+.editing-row {
+
+  .formeo-column,
+  .empty {
+    border-radius: var.$border-radius;
+    height: 60px;
+    background-color: color.$gray-lightest;
+
+    &.empty {
+      min-height: 0;
+    }
+
+    .formeo-field {
+      display: none;
+    }
+
+    .resize-x-handle {
+      display: block;
+    }
+
+    &::after {
+      color: color.$gray-dark !important;
+      line-height: 1em;
+      opacity: 1;
+      font-size: 1.1em;
+      content: attr(data-col-width) !important;
+      display: block;
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      left: 50%;
+      margin-top: 0;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+.editing-field-preview {
+  .column-actions {
+    display: none;
+  }
+}
+
+.column-moving {
+  background-color: color.$column-highlight-color;
+
+  .action-btn-wrap {
+    button {
+      background-color: color.$column-highlight-color;
+    }
+  }
+
+  .column-tag {
+    background-color: color.$column-highlight-color;
+  }
+}
+
+button.column-handle {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.hovering-column {
+  .column-tag {
+    display: flex;
+  }
+
+  .column-handle {
+    display: none;
+  }
+
+  .column-action-btn-wrap {
+    display: flex;
+  }
+
+  &:first-child {
+    border-top-left-radius: 0;
+  }
+
+  &::after {
+    opacity: 0;
+  }
+}
+
+.hovering-column,
+.editing-column {
+  box-shadow: 0 0 0 1px color.$column-outline-color;
+}
+
+.column-actions {
+  padding: 0;
+  left: 50%;
+  transition: width 0.15s;
+
+  .f-i-handle {
+    transform: rotate(90deg);
+  }
+}

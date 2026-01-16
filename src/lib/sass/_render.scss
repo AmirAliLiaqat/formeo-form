@@ -1,0 +1,139 @@
+@use "base/mixins";
+
+@use "base/colors" as color;
+@use "base/variables" as var;
+
+.formeo-row,
+.formeo-column,
+.formeo-field {
+  position: relative;
+}
+
+.f-input-group-wrap {
+  .formeo-row:first-of-type {
+    .remove-input-group {
+      display: none;
+    }
+  }
+
+  > fieldset {
+    position: relative;
+    .remove-input-group {
+      top: 8px;
+    }
+  }
+}
+
+.formeo-row {
+  margin-bottom: 1em;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items: stretch;
+  display: flex;
+  border-radius: var.$border-radius;
+  outline: 0 solid color.$remove-bg;
+
+  transition: background-color var.$animation-speed-fast,
+    outline var.$animation-speed-fast;
+  padding: mixins.space() 0;
+
+  &.will-remove {
+    border-radius: 2px;
+    background-color: color.$remove-bg;
+    outline: 6px solid color.$remove-bg;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+fieldset.formeo-row-wrap {
+  padding: mixins.space(2);
+}
+
+.formeo-row-wrap {
+  margin-bottom: 1em;
+  border-radius: mixins.space(1);
+
+  legend {
+    padding: mixins.space() mixins.space(1);
+    border-style: groove;
+    border-width: 2px;
+    border-color: threedface;
+    border-radius: mixins.space(1);
+    font-size: 1.15em;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.f-input-group {
+  position: relative;
+
+  &:first-child {
+    .remove-input-group {
+      display: none;
+    }
+  }
+}
+
+.add-input-group {
+  float: right;
+  margin-top: 10px;
+}
+
+.remove-input-group {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: mixins.space(3);
+  height: mixins.space(3);
+  border: 0 none;
+  background: transparent;
+  outline: 0 none;
+  line-height: 0;
+  padding: mixins.space();
+
+  &:hover {
+    background-color: color.$white;
+    .svg-icon {
+      fill: color.$brand-error;
+    }
+  }
+
+  .svg-icon {
+    pointer-events: none;
+  }
+}
+
+.form-check-input:only-child {
+  position: absolute;
+}
+
+.svg-icon {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.formeo-column {
+  padding: 0 mixins.space();
+  float: left;
+  max-width: none;
+  flex-direction: column;
+  &:first-of-type {
+    padding-left: 0;
+  }
+  &:last-of-type {
+    padding-right: 0;
+  }
+}
+
+.f-checkbox {
+  display: flex;
+  align-items: center;
+  gap: mixins.space();
+}

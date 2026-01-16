@@ -1,0 +1,55 @@
+@use 'colors' as color;
+@use 'variables' as var;
+
+
+.svg-icon {
+  display: inline-block;
+  width: var.$action-btn-width;
+  height: var.$action-btn-width;
+  pointer-events: none;
+}
+
+.f-i-remove {
+  &:hover {
+    fill: color.$brand-error;
+  }
+}
+button[class*='-move'] {
+  &:hover {
+    background-color: color.$brand-info !important;
+
+    .svg-icon {
+      fill: color.$white;
+    }
+  }
+}
+
+button[class*='-remove'] {
+  &:hover {
+    background-color: color.$brand-error !important;
+
+    .svg-icon {
+      fill: color.$white;
+    }
+  }
+}
+
+button[class*='-clone'] {
+  &:hover {
+    background-color: color.$brand-success !important;
+
+    .svg-icon {
+      fill: color.$white;
+    }
+  }
+}
+
+.edit-toggle {
+  &:hover {
+    background-color: color.$brand-primary !important;
+
+    .svg-icon {
+      fill: color.$white;
+    }
+  }
+}

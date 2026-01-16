@@ -1,0 +1,127 @@
+@use 'sass:color' as sass-color;
+@use '../base/mixins';
+
+@use '../base/colors' as color;
+@use '../base/variables' as var;
+
+.f-autocomplete {
+  position: relative;
+}
+
+.f-autocomplete-display-field {
+  width: 100%;
+}
+
+.f-autocomplete-list {
+  background-color: color.$white;
+  display: none;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  margin: 0 -1px;
+  border: 1px solid color.$gray-light;
+  border-width: 1px 1px 0;
+  box-shadow: 0 1px mixins.space() 0 rgba(0, 0, 0, 0.5);
+
+  li {
+    position: relative;
+    border: 1px solid color.$gray-light;
+    display: none;
+    cursor: default;
+    padding: mixins.space();
+    margin: -1px 0 0;
+    border-width: 1px 0;
+    transition: background-color var.$animation-speed-fast ease-in-out;
+    will-change: background-color;
+    font-size: 0.85em;
+
+    &.component-type-row {
+      padding-left: mixins.space();
+    }
+
+    &.component-type-column {
+      padding-left: mixins.space(1);
+    }
+
+    &.component-type-field {
+      padding-left: mixins.space(2);
+    }
+
+    &.active-option {
+      &.component-type-stage {
+        background-color: color.$stage-outline-color;
+        color: color.$stage-outline-color-text;
+      }
+
+      &.component-type-row {
+        background-color: color.$row-outline-color;
+        color: color.$row-outline-color-text;
+      }
+
+      &.component-type-column {
+        background-color: color.$column-outline-color;
+        color: color.$column-outline-color-text;
+      }
+
+      &.component-type-field {
+        background-color: color.$field-outline-color;
+        color: color.$field-outline-color-text;
+      }
+
+      &.component-type-option {
+        background-color: color.$option-outline-color;
+        color: color.$option-outline-color-text;
+      }
+    }
+
+    &:hover {
+      &.component-type-stage {
+        background-color: color.$stage-highlight-color;
+        color: color.$stage-highlight-color-text;
+      }
+
+      &.component-type-row {
+        background-color: color.$row-highlight-color;
+        color: color.$row-highlight-color-text;
+      }
+
+      &.component-type-column {
+        background-color: color.$column-highlight-color;
+        color: color.$column-highlight-color-text;
+      }
+
+      &.component-type-field {
+        background-color: color.$field-highlight-color;
+        color: color.$field-highlight-color-text;
+      }
+
+      &.component-type-option {
+        background-color: color.$option-highlight-color;
+        color: color.$option-highlight-color-text;
+      }
+    }
+
+    &:has(.options-list):hover .options-list {
+      display: block;
+    }
+  }
+
+  .component-type {
+    color: color.$gray;
+    font-style: italic;
+    font-size: 0.75em;
+  }
+
+  &.options-list {
+    left: 100%;
+    top: 0;
+    width: 75%;
+    min-height: 100%;
+
+    li {
+      display: block;
+    }
+  }
+}

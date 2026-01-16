@@ -1,0 +1,96 @@
+@use "../base/colors" as color;
+@use "../base/variables" as var;
+
+.group-actions {
+  display: flex;
+  transition: opacity 0.3s ease-in-out allow-discrete;
+
+  position: absolute;
+  top: 0;
+  line-height: 0;
+  z-index: 1;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: var.$border-radius;
+
+  .action-btn-wrap {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    border-top-right-radius: var.$border-radius;
+    border-bottom-left-radius: var.$border-radius;
+    border-bottom-right-radius: var.$border-radius;
+
+    transition: opacity 1s ease-in-out allow-discrete;
+
+    .component-handle {
+      opacity: 0.65;
+    }
+
+    button {
+      background-color: color.$white;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    width: var.$action-btn-width;
+    height: var.$action-btn-width;
+    padding: 6px;
+    border: 0 none;
+    line-height: 0;
+
+    &:focus {
+      border: 0 none;
+      outline: 0 none;
+      box-shadow: none;
+    }
+  }
+
+  .svg-icon {
+    width: calc(var.$action-btn-width / 2);
+    height: calc(var.$action-btn-width / 2);
+  }
+
+  .last-field & {
+    button {
+      &:last-child {
+        border-radius: 0;
+      }
+    }
+  }
+}
+
+.column-editing-field {
+  .column-actions {
+    display: none;
+  }
+}
+
+.group-config {
+  display: none;
+  padding: 0.5rem;
+}
+
+.editing-row {
+  .column-actions {
+    display: none;
+  }
+}
+
+.hovering {
+  > .children,
+  > .field-preview,
+  > .prev-label {
+    opacity: 0.65;
+  }
+
+  .group-actions {
+    .f-i-handle {
+      display: none;
+    }
+  }
+}

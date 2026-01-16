@@ -1,0 +1,60 @@
+@use 'sass:color' as sass-color;
+@use 'mixins';
+
+@use 'colors' as color;
+@use 'variables' as var;
+
+/*
+  Animations
+*/
+
+@keyframes PLACEHOLDER {
+  0% {
+    height: 1px;
+  }
+
+  100% {
+    height: 15px;
+  }
+}
+
+@keyframes DRAG_GHOST {
+  0% {
+    box-shadow: 0 0 0 0 color.$gray-light;
+  }
+
+  100% {
+    box-shadow: 0 0 30px 0 color.$gray-light;
+  }
+}
+
+@keyframes EDIT_PULSE {
+  from,
+  to {
+    border-color: color.$input-focus;
+  }
+
+  50% {
+    border-color: sass-color.adjust(color.$input-focus, $lightness: 20%);
+  }
+}
+
+@keyframes COMPONENT_HIGHLIGHT_PULSE {
+  0% {
+    box-shadow: 0 0 1px mixins.space(1) color.$brand-info;
+  }
+  100% {
+    box-shadow: 0 0 0 0 color.$brand-info;
+  }
+}
+
+@keyframes SLIDE_UP {
+  0% {
+    transform: translateY(100%);
+    clip-path: inset(0 0 100% -20%);
+  }
+  100% {
+    transform: translateY(0);
+    clip-path: inset(0 0 0 -20%);
+  }
+}
