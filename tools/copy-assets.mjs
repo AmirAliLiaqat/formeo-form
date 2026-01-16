@@ -33,6 +33,12 @@ const targets = [
     src: resolve(projectRoot, 'dist/formeo.min.css'),
     dest: resolve(projectRoot, 'dist/demo/assets/css/'),
   },
+  {
+    // If the demo build outputs CSS (compiled from src/demo/sass), copy it into dist/ as formeo.min.css
+    src: resolve(projectRoot, 'dist/demo/assets/css/*.css'),
+    dest: resolve(projectRoot, 'dist/'),
+    rename: 'formeo.min.css',
+  },
 ]
 
 async function copyFile(src, dest, rename = null) {
@@ -52,6 +58,34 @@ async function main() {
     } catch (error) {
       console.error(`Error copying file: ${error.message}`)
     }
+  }
+
+  // After copying, if demo CSS exists, append it to dist/formeo.min.css so package consumers receive demo overrides
+  try {
+    const demoCssGlob = resolve(projectRoot, 'dist/demo/assets/css/*.css')
+    const outCss = resolve(projectRoot, 'dist/formeo.min.css')
+    const demoFiles = []
+    for await (const f of fs.glob(demoCssGlob)) demoFiles.push(f)
+    if (demoFiles.length) {
+      let outExists = false
+      try {
+        await fs.access(outCss)
+        outExists = true
+      } catch (e) {
+        outExists = false
+      }
+      let outContent = ''
+      if (outExists) outContent = await fs.readFile(outCss, 'utf8')
+      for (const demoFile of demoFiles) {
+        const demoContent = await fs.readFile(demoFile, 'utf8')
+        outContent += `\n\n/* Demo overrides from ${basename(demoFile)} */\n` + demoContent
+      }
+      await fs.mkdir(dirname(outCss), { recursive: true })
+      await fs.writeFile(outCss, outContent, 'utf8')
+      console.log(`Appended demo CSS (${demoFiles.length} files) into ${outCss}`)
+    }
+  } catch (err) {
+    console.error(`Error appending demo CSS: ${err.message}`)
   }
 }
 

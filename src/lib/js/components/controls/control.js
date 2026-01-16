@@ -40,7 +40,7 @@ export default class Control {
       },
       content: [
         { tag: 'span', className: 'control-icon', children: dom.icon(meta.icon) },
-        { tag: 'span', className: 'control-label', content: controlLabel },
+        { tag: 'span', className: 'control-label', content: 'controlLabel' },
       ],
       action: {
         // this is used for keyboard navigation. when tabbing through controls it

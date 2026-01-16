@@ -303,6 +303,62 @@ body {
   }
 }
 
+// New editor layout: left sidebar with tabs and large canvas
+.formeo-editor-shell {
+  display: flex;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.formeo-sidebar {
+  width: 260px;
+  background: #f7f7f8;
+  border-right: 1px solid #e9e9eb;
+  padding: 18px;
+}
+
+.formeo-sidebar .tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.formeo-sidebar .tab {
+  flex: 1;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.formeo-canvas-wrap {
+  flex: 1;
+  padding: 28px;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg,#fff,#fbfbfc);
+}
+
+.formeo-canvas {
+  width: 100%;
+  max-width: 900px;
+  min-height: 420px;
+  border: 1px dashed #e6e6ea;
+  border-radius: 6px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa0a6;
+}
+
 .error-message {
   padding: 20px;
   background: #f8d7da;
