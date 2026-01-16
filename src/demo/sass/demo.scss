@@ -10,7 +10,8 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #e4efe9 0%, #7db9e8 100%);
+  background: #000000;
+  color: #ffffff;
   background-attachment: fixed;
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -34,6 +35,11 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+.header-inner {
+  a, label, select, option, input, button, li {
+    color: #ffffff;
+  }
+}
 
 #demo-header,
 #demo-footer {
@@ -41,12 +47,12 @@ body {
 }
 
 #demo-header {
-  background-color: #efefef;
+  background-color: #111111;
   text-align: center;
 
   nav {
     text-align: left;
-    background-color: #efefef;
+    background-color: transparent;
     display: block;
   }
 }
@@ -55,7 +61,7 @@ body {
   width: 100%;
 
   nav {
-    background-color: #666;
+    background-color: #111111;
     text-align: right;
   }
 }
@@ -157,7 +163,9 @@ body {
   button {
     padding: 4px 8px;
     border-radius: 4px;
-    border: 1px solid gray;
+    border: 1px solid #333;
+    background: #1f1f1f;
+    color: #fff;
   }
 }
 
@@ -266,8 +274,8 @@ body {
   }
 
   pre {
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
+    background: #0b0b0b;
+    border: 1px solid #222;
     border-radius: 6px;
     padding: 16px;
     overflow-x: auto;
@@ -277,17 +285,17 @@ body {
       font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
       font-size: 13px;
       line-height: 1.4;
-      color: #333;
+      color: #e6e6e6;
     }
   }
 }
 
 .demo-container {
   margin-top: 20px;
-  border: 2px dashed #ddd;
+  border: 2px dashed #2b2b2b;
   border-radius: 8px;
   padding: 20px;
-  background: #fafafa;
+  background: #0f0f0f;
 
   .build-form-angular,
   .render-form-angular {
@@ -296,9 +304,9 @@ body {
   }
 
   .render-form-angular {
-    border: 1px solid #ddd;
+    border: 1px solid #2b2b2b;
     padding: 15px;
-    background: white;
+    background: #1a1a1a;
     border-radius: 4px;
   }
 }
@@ -335,9 +343,9 @@ body {
 }
 
 .toggle-button {
-  background-color: #f8f9fa;
-  color: #495057;
-  border: 1px solid #dee2e6;
+  background-color: #151515;
+  color: #e6e6e6;
+  border: 1px solid #2b2b2b;
   padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;

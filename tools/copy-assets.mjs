@@ -33,6 +33,12 @@ const targets = [
     src: resolve(projectRoot, 'dist/formeo.min.css'),
     dest: resolve(projectRoot, 'dist/demo/assets/css/'),
   },
+  {
+    // If the demo build outputs CSS (compiled from src/demo/sass), copy it into dist/ as formeo.min.css
+    src: resolve(projectRoot, 'dist/demo/assets/css/*.css'),
+    dest: resolve(projectRoot, 'dist/'),
+    rename: 'formeo.min.css',
+  },
 ]
 
 async function copyFile(src, dest, rename = null) {
