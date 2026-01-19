@@ -21,6 +21,7 @@ export const FALLBACK_CSS_URL = 'https://draggable.github.io/formeo/assets/css/f
 export const PANEL_CLASSNAME = 'f-panel'
 export const CONTROL_GROUP_CLASSNAME = 'control-group'
 export const STAGE_CLASSNAME = `${PACKAGE_NAME}-stage`
+export const SECTION_CLASSNAME = `${PACKAGE_NAME}-section`
 export const ROW_CLASSNAME = `${PACKAGE_NAME}-row`
 export const COLUMN_CLASSNAME = `${PACKAGE_NAME}-column`
 export const FIELD_CLASSNAME = `${PACKAGE_NAME}-field`
@@ -31,11 +32,12 @@ export const COLUMN_RESIZE_CLASSNAME = 'resizing-columns'
 
 export const CHILD_CLASSNAME_MAP = new Map([
   [STAGE_CLASSNAME, ROW_CLASSNAME],
+  [SECTION_CLASSNAME, ROW_CLASSNAME],
   [ROW_CLASSNAME, COLUMN_CLASSNAME],
   [COLUMN_CLASSNAME, FIELD_CLASSNAME],
 ])
 
-export const INTERNAL_COMPONENT_TYPES = ['stage', 'row', 'column', 'field']
+export const INTERNAL_COMPONENT_TYPES = ['stage', 'section', 'row', 'column', 'field']
 export const INTERNAL_COMPONENT_INDEX_TYPES = INTERNAL_COMPONENT_TYPES.map(type => `${type}s`)
 export const INTERNAL_COMPONENT_INDEX_TYPE_MAP = new Map(
   INTERNAL_COMPONENT_INDEX_TYPES.map((type, index) => [type, INTERNAL_COMPONENT_TYPES[index]])
@@ -57,6 +59,7 @@ export const COMPONENT_TYPE_MAP = COMPONENT_TYPES.reduce((acc, type) => {
 export const COMPONENT_TYPE_CONFIGS = [
   { name: 'controls', className: CONTROL_GROUP_CLASSNAME },
   { name: 'stage', className: STAGE_CLASSNAME },
+  { name: 'section', className: SECTION_CLASSNAME },
   { name: 'row', className: ROW_CLASSNAME },
   { name: 'column', className: COLUMN_CLASSNAME },
   { name: 'field', className: FIELD_CLASSNAME },
@@ -65,6 +68,7 @@ export const COMPONENT_TYPE_CONFIGS = [
 export const COMPONENT_TYPE_CLASSNAMES = {
   controls: CONTROL_GROUP_CLASSNAME,
   stage: STAGE_CLASSNAME,
+  section: SECTION_CLASSNAME,
   row: ROW_CLASSNAME,
   column: COLUMN_CLASSNAME,
   field: FIELD_CLASSNAME,
@@ -106,6 +110,7 @@ export const PARENT_TYPE_MAP = new Map(parentTypeMap.slice())
 
 export const TYPE_CHILD_CLASSNAME_MAP = new Map([
   ['stage', ROW_CLASSNAME],
+  ['section', ROW_CLASSNAME],
   ['row', COLUMN_CLASSNAME],
   ['column', FIELD_CLASSNAME],
 ])
@@ -148,14 +153,17 @@ export const EVENT_FORMEO_SAVED = 'formeoSaved'
 export const EVENT_FORMEO_UPDATED = 'formeoUpdated'
 export const EVENT_FORMEO_CHANGED = 'formeoChanged'
 export const EVENT_FORMEO_UPDATED_STAGE = 'formeoUpdatedStage'
+export const EVENT_FORMEO_UPDATED_SECTION = 'formeoUpdatedSection'
 export const EVENT_FORMEO_UPDATED_ROW = 'formeoUpdatedRow'
 export const EVENT_FORMEO_UPDATED_COLUMN = 'formeoUpdatedColumn'
 export const EVENT_FORMEO_UPDATED_FIELD = 'formeoUpdatedField'
 export const EVENT_FORMEO_CLEARED = 'formeoCleared'
 export const EVENT_FORMEO_ON_RENDER = 'formeoOnRender'
 export const EVENT_FORMEO_CONDITION_UPDATED = 'formeoConditionUpdated'
+export const EVENT_FORMEO_ADDED_SECTION = 'formeoAddedSection'
 export const EVENT_FORMEO_ADDED_ROW = 'formeoAddedRow'
 export const EVENT_FORMEO_ADDED_COLUMN = 'formeoAddedColumn'
+export const EVENT_FORMEO_REMOVED_SECTION = 'formeoRemovedSection'
 export const EVENT_FORMEO_ADDED_FIELD = 'formeoAddedField'
 export const EVENT_FORMEO_REMOVED_ROW = 'formeoRemovedRow'
 export const EVENT_FORMEO_REMOVED_COLUMN = 'formeoRemovedColumn'
@@ -225,6 +233,7 @@ export const iconPrefix = 'f-i-'
 export const DEFAULT_FORMDATA = () => ({
   id: uuid(),
   stages: { [uuid()]: {} },
+  sections: {},
   rows: {},
   columns: {},
   fields: {},

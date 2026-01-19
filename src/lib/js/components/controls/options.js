@@ -6,7 +6,7 @@ const defaultOptions = Object.freeze({
     {
       id: 'layout',
       label: 'controls.groups.layout',
-      elementOrder: ['row', 'column'],
+      elementOrder: ['section', 'row', 'column'],
     },
     {
       id: 'common',

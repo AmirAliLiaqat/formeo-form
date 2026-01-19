@@ -27,6 +27,7 @@
 
     @include meta.load-css("components/component");
     @include meta.load-css("components/stage");
+    @include meta.load-css("components/section");
 
     @include meta.load-css("base/rtl");
   }

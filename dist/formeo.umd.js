@@ -24,7 +24,7 @@ Author: Draggable https://draggable.io
       throw error;
     }
   }
-  const DEFAULT_CONFIG$4 = {
+  const DEFAULT_CONFIG$5 = {
     extension: ".lang",
     // local or remote directory containing language files
     location: "assets/lang/",
@@ -39,7 +39,7 @@ Author: Draggable https://draggable.io
      * Process options and start the module
      * @param {Object} options
      */
-    constructor(options = DEFAULT_CONFIG$4) {
+    constructor(options = DEFAULT_CONFIG$5) {
       this.langs = /* @__PURE__ */ Object.create(null);
       this.loaded = [];
       this.processConfig(options);
@@ -49,7 +49,7 @@ Author: Draggable https://draggable.io
      * @param {Object} options
      */
     processConfig(options) {
-      const { location, ...restOptions } = { ...DEFAULT_CONFIG$4, ...options };
+      const { location, ...restOptions } = { ...DEFAULT_CONFIG$5, ...options };
       const parsedLocation = location.replace(/\/?$/, "/");
       this.config = { location: parsedLocation, ...restOptions };
       const { override, preloaded = {} } = this.config;
@@ -2183,6 +2183,7 @@ Author: Draggable https://draggable.io
   const PANEL_CLASSNAME = "f-panel";
   const CONTROL_GROUP_CLASSNAME = "control-group";
   const STAGE_CLASSNAME = `${PACKAGE_NAME}-stage`;
+  const SECTION_CLASSNAME = `${PACKAGE_NAME}-section`;
   const ROW_CLASSNAME = `${PACKAGE_NAME}-row`;
   const COLUMN_CLASSNAME = `${PACKAGE_NAME}-column`;
   const FIELD_CLASSNAME = `${PACKAGE_NAME}-field`;
@@ -2191,10 +2192,11 @@ Author: Draggable https://draggable.io
   const COLUMN_RESIZE_CLASSNAME = "resizing-columns";
   const CHILD_CLASSNAME_MAP = /* @__PURE__ */ new Map([
     [STAGE_CLASSNAME, ROW_CLASSNAME],
+    [SECTION_CLASSNAME, ROW_CLASSNAME],
     [ROW_CLASSNAME, COLUMN_CLASSNAME],
     [COLUMN_CLASSNAME, FIELD_CLASSNAME]
   ]);
-  const INTERNAL_COMPONENT_TYPES = ["stage", "row", "column", "field"];
+  const INTERNAL_COMPONENT_TYPES = ["stage", "section", "row", "column", "field"];
   const INTERNAL_COMPONENT_INDEX_TYPES = INTERNAL_COMPONENT_TYPES.map((type) => `${type}s`);
   new Map(
     INTERNAL_COMPONENT_INDEX_TYPES.map((type, index2) => [type, INTERNAL_COMPONENT_TYPES[index2]])
@@ -2212,6 +2214,7 @@ Author: Draggable https://draggable.io
   const COMPONENT_TYPE_CONFIGS = [
     { name: "controls", className: CONTROL_GROUP_CLASSNAME },
     { name: "stage", className: STAGE_CLASSNAME },
+    { name: "section", className: SECTION_CLASSNAME },
     { name: "row", className: ROW_CLASSNAME },
     { name: "column", className: COLUMN_CLASSNAME },
     { name: "field", className: FIELD_CLASSNAME }
@@ -2219,6 +2222,7 @@ Author: Draggable https://draggable.io
   const COMPONENT_TYPE_CLASSNAMES = {
     controls: CONTROL_GROUP_CLASSNAME,
     stage: STAGE_CLASSNAME,
+    section: SECTION_CLASSNAME,
     row: ROW_CLASSNAME,
     column: COLUMN_CLASSNAME,
     field: FIELD_CLASSNAME
@@ -2349,6 +2353,7 @@ Author: Draggable https://draggable.io
   const DEFAULT_FORMDATA = () => ({
     id: uuid(),
     stages: { [uuid()]: {} },
+    sections: {},
     rows: {},
     columns: {},
     fields: {}
@@ -9497,7 +9502,7 @@ Author: Draggable https://draggable.io
       return value;
     }
   }
-  const DEFAULT_DATA$2 = () => Object.freeze({
+  const DEFAULT_DATA$3 = () => Object.freeze({
     config: {
       width: "100%"
     },
@@ -9523,7 +9528,7 @@ Author: Draggable https://draggable.io
      * @return {Object} Column config object
      */
     constructor(columnData) {
-      super("column", { ...DEFAULT_DATA$2(), ...columnData });
+      super("column", { ...DEFAULT_DATA$3(), ...columnData });
       const childWrap = this.createChildWrap();
       this.dom = dom.create({
         tag: "li",
@@ -9606,7 +9611,7 @@ Author: Draggable https://draggable.io
       return this.set("config.width", width);
     };
   }
-  const DEFAULT_CONFIG$3 = {
+  const DEFAULT_CONFIG$4 = {
     actionButtons: {
       buttons: ["clone", "move", "remove"],
       disabled: []
@@ -9615,14 +9620,14 @@ Author: Draggable https://draggable.io
   let Columns$1 = class Columns extends ComponentData {
     constructor(columnData) {
       super("columns", columnData);
-      this.config = { all: DEFAULT_CONFIG$3 };
+      this.config = { all: DEFAULT_CONFIG$4 };
     }
     Component(data) {
       return new Column(data);
     }
   };
   const columns = new Columns$1();
-  const DEFAULT_DATA$1 = () => Object.freeze({
+  const DEFAULT_DATA$2 = () => Object.freeze({
     config: {
       fieldset: false,
       // wrap contents of row in fieldset
@@ -9641,7 +9646,7 @@ Author: Draggable https://draggable.io
      * @return {Object}
      */
     constructor(rowData) {
-      super("row", { ...DEFAULT_DATA$1(), ...rowData });
+      super("row", { ...DEFAULT_DATA$2(), ...rowData });
       const children = this.createChildWrap();
       this.dom = dom.create({
         tag: "li",
@@ -9888,7 +9893,7 @@ Author: Draggable https://draggable.io
       return layoutPreset;
     }
   }
-  const DEFAULT_CONFIG$2 = {
+  const DEFAULT_CONFIG$3 = {
     actionButtons: {
       buttons: ["move", "edit", "clone", "remove"],
       disabled: []
@@ -9897,14 +9902,14 @@ Author: Draggable https://draggable.io
   let Rows$1 = class Rows extends ComponentData {
     constructor(rowData) {
       super("rows", rowData);
-      this.config = { all: DEFAULT_CONFIG$2 };
+      this.config = { all: DEFAULT_CONFIG$3 };
     }
     Component(data) {
       return new Row(data);
     }
   };
   const rows = new Rows$1();
-  const DEFAULT_DATA = () => ({ conditions: [CONDITION_TEMPLATE()], children: [] });
+  const DEFAULT_DATA$1 = () => ({ conditions: [CONDITION_TEMPLATE()], children: [] });
   class Stage extends Component {
     /**
      * Process options and load existing fields from data to the stage
@@ -9913,7 +9918,7 @@ Author: Draggable https://draggable.io
      * @return {Object} DOM element
      */
     constructor(stageData) {
-      super("stage", { ...DEFAULT_DATA(), ...stageData });
+      super("stage", { ...DEFAULT_DATA$1(), ...stageData });
       this.updateEditPanels();
       this.debouncedUpdateEditPanels = debounce(this.updateEditPanels);
       ({
@@ -9970,7 +9975,7 @@ Author: Draggable https://draggable.io
         group: {
           name: "stage",
           pull: true,
-          put: ["row", "column", "controls"]
+          put: ["row", "section", "column", "controls"]
         },
         sort: true,
         disabled: false,
@@ -9980,7 +9985,7 @@ Author: Draggable https://draggable.io
           stages.active = this;
         },
         onSort: this.onSort.bind(this),
-        draggable: `.${ROW_CLASSNAME}`,
+        draggable: `.${ROW_CLASSNAME}, .${SECTION_CLASSNAME}`,
         handle: ".item-move"
       });
     }
@@ -10005,7 +10010,7 @@ Author: Draggable https://draggable.io
       }
     }
   }
-  const DEFAULT_CONFIG$1 = () => ({
+  const DEFAULT_CONFIG$2 = () => ({
     actionButtons: {
       buttons: ["edit"],
       disabled: []
@@ -10021,7 +10026,7 @@ Author: Draggable https://draggable.io
   let Stages$1 = class Stages extends ComponentData {
     constructor(stageData) {
       super("stages", stageData);
-      this.config = { all: DEFAULT_CONFIG$1() };
+      this.config = { all: DEFAULT_CONFIG$2() };
     }
     Component(data) {
       return new Stage(data);
@@ -10050,7 +10055,7 @@ Author: Draggable https://draggable.io
     }
     get dom() {
       const { meta, config } = this.controlData;
-      this.i18n(config.label) || config.label;
+      const controlLabel = this.i18n(config.label) || config.label;
       const button = {
         tag: "button",
         attrs: {
@@ -10058,7 +10063,7 @@ Author: Draggable https://draggable.io
         },
         content: [
           { tag: "span", className: "control-icon", children: dom.icon(meta.icon) },
-          { tag: "span", className: "control-label", content: "controlLabel" }
+          { tag: "span", className: "control-label", content: controlLabel }
         ],
         action: {
           // this is used for keyboard navigation. when tabbing through controls it
@@ -10110,7 +10115,7 @@ Author: Draggable https://draggable.io
       {
         id: "layout",
         label: "controls.groups.layout",
-        elementOrder: ["row", "column"]
+        elementOrder: ["section", "row", "column"]
       },
       {
         id: "common",
@@ -10645,7 +10650,7 @@ Author: Draggable https://draggable.io
     __proto__: null,
     default: Field
   }, Symbol.toStringTag, { value: "Module" }));
-  const DEFAULT_CONFIG = () => ({
+  const DEFAULT_CONFIG$1 = () => ({
     actionButtons: {
       buttons: ["move", "edit", "clone", "remove"],
       disabled: []
@@ -10666,7 +10671,7 @@ Author: Draggable https://draggable.io
   let Fields$1 = class Fields extends ComponentData {
     constructor(fieldData) {
       super("fields", fieldData);
-      this.config = { all: DEFAULT_CONFIG() };
+      this.config = { all: DEFAULT_CONFIG$1() };
     }
     Component(data) {
       return new Field(data);
@@ -10712,7 +10717,135 @@ Author: Draggable https://draggable.io
     };
   };
   const fields = new Fields$1();
+  const DEFAULT_DATA = () => Object.freeze({
+    config: {
+      title: "",
+      // Section title
+      collapsible: false,
+      // Can be collapsed
+      expanded: true
+      // Default state if collapsible
+    },
+    children: [],
+    className: [SECTION_CLASSNAME]
+  });
+  class Section extends Component {
+    constructor(sectionData) {
+      super("section", { ...DEFAULT_DATA(), ...sectionData });
+      const children = this.createChildWrap();
+      this.dom = dom.create({
+        tag: "div",
+        className: [SECTION_CLASSNAME, "empty"],
+        dataset: {
+          hoverTag: mi18n.get("section"),
+          editingHoverTag: mi18n.get("editing.section")
+        },
+        id: this.id,
+        content: [this.getComponentTag(), this.getActionButtons(), this.editWindow, children]
+      });
+      Sortable.create(children, {
+        animation: 150,
+        fallbackClass: "row-moving",
+        forceFallback: true,
+        group: {
+          name: "section",
+          pull: true,
+          put: ["section", "row", "controls"]
+        },
+        sort: true,
+        disabled: false,
+        onRemove: this.onRemove.bind(this),
+        onEnd: this.onEnd.bind(this),
+        onAdd: this.onAdd.bind(this),
+        onSort: this.onSort.bind(this),
+        draggable: `.${ROW_CLASSNAME}`,
+        handle: ".item-move"
+      });
+    }
+    /**
+     * Edit window for Section
+     */
+    get editWindow() {
+      const titleInput = {
+        tag: "input",
+        attrs: {
+          type: "text",
+          placeholder: mi18n.get("section.title.placeholder") || "Section Title",
+          value: this.get("config.title") || ""
+        },
+        config: { label: mi18n.get("section.title") || "Title" },
+        action: {
+          input: ({ target }) => {
+            this.set("config.title", target.value);
+            this.updateTitle();
+          }
+        }
+      };
+      const collapsibleCheckbox = {
+        tag: "input",
+        attrs: {
+          type: "checkbox",
+          checked: this.get("config.collapsible") || false
+        },
+        config: { label: mi18n.get("section.collapsible") || "Collapsible" },
+        action: {
+          change: ({ target }) => {
+            this.set("config.collapsible", target.checked);
+          }
+        }
+      };
+      const editWindow = dom.create({
+        className: `${this.name}-edit group-config`,
+        content: [dom.formGroup([titleInput]), dom.formGroup([collapsibleCheckbox])]
+      });
+      return editWindow;
+    }
+    /**
+     * Update section title display
+     */
+    updateTitle() {
+      const title = this.get("config.title");
+      let titleElement = this.dom.querySelector(".section-title");
+      if (title) {
+        if (!titleElement) {
+          titleElement = dom.create({
+            tag: "h3",
+            className: "section-title",
+            content: title
+          });
+          this.dom.insertBefore(titleElement, this.dom.querySelector(".child-wrap"));
+        } else {
+          titleElement.textContent = title;
+        }
+      } else if (titleElement) {
+        titleElement.remove();
+      }
+    }
+    /**
+     * Process config changes
+     */
+    processConfig() {
+      this.updateTitle();
+    }
+  }
+  const DEFAULT_CONFIG = {
+    actionButtons: {
+      buttons: ["move", "edit", "clone", "remove"],
+      disabled: []
+    }
+  };
+  let Sections$1 = class Sections extends ComponentData {
+    constructor(sectionData) {
+      super("sections", sectionData);
+      this.config = { all: DEFAULT_CONFIG };
+    }
+    Component(data) {
+      return new Section(data);
+    }
+  };
+  const sections = new Sections$1();
   const Stages = stages;
+  const Sections = sections;
   const Rows = rows;
   const Columns = columns;
   const Fields = fields;
@@ -10731,6 +10864,7 @@ Author: Draggable https://draggable.io
       super("components");
       this.disableEvents = true;
       this.stages = Stages;
+      this.sections = Sections;
       this.rows = Rows;
       this.columns = Columns;
       this.fields = Fields;
@@ -10742,6 +10876,7 @@ Author: Draggable https://draggable.io
       this.opts = opts;
       this.set("id", formData.id);
       this.add("stages", Stages.load(formData.stages));
+      this.add("sections", Sections.load(formData.sections || {}));
       this.add("rows", Rows.load(formData.rows));
       this.add("columns", Columns.load(formData.columns));
       this.add("fields", Fields.load(formData.fields));
@@ -10777,14 +10912,16 @@ Author: Draggable https://draggable.io
       return {
         id: this.get("id"),
         stages: stages.getData(),
+        sections: sections.getData(),
         rows: rows.getData(),
         columns: columns.getData(),
         fields: fields.getData()
       };
     }
     set config(config) {
-      const { stages: stages2, rows: rows2, columns: columns2, fields: fields2 } = config;
+      const { stages: stages2, sections: sections2, rows: rows2, columns: columns2, fields: fields2 } = config;
       Stages.config = stages2;
+      Sections.config = sections2;
       Rows.config = rows2;
       Columns.config = columns2;
       Fields.config = fields2;
@@ -10830,6 +10967,7 @@ Author: Draggable https://draggable.io
     Dialog,
     Fields,
     Rows,
+    Sections,
     Stages,
     default: components
   }, Symbol.toStringTag, { value: "Module" }));
@@ -11727,7 +11865,18 @@ Author: Draggable https://draggable.io
       id: "layout-row"
     }
   };
-  const index$4 = [rowControl, columnControl];
+  const sectionControl = {
+    config: {
+      label: "section"
+    },
+    meta: {
+      group: "layout",
+      icon: "header",
+      // Using header icon for now, can be changed later
+      id: "layout-section"
+    }
+  };
+  const index$4 = [rowControl, columnControl, sectionControl];
   const index$5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
     __proto__: null,
     default: index$4

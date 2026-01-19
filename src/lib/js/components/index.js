@@ -6,11 +6,13 @@ import ColumnsData from './columns/index.js'
 import Data from './data.js'
 import FieldsData from './fields/index.js'
 import RowsData from './rows/index.js'
+import SectionsData from './sections/index.js'
 import StagesData from './stages/index.js'
 import ControlsData from './controls/index.js'
 export { Dialog } from './dialog.js'
 
 export const Stages = StagesData
+export const Sections = SectionsData
 export const Rows = RowsData
 export const Columns = ColumnsData
 export const Fields = FieldsData
@@ -32,6 +34,7 @@ export class Components extends Data {
     super('components')
     this.disableEvents = true
     this.stages = Stages
+    this.sections = Sections
     this.rows = Rows
     this.columns = Columns
     this.fields = Fields
@@ -46,6 +49,7 @@ export class Components extends Data {
 
     this.set('id', formData.id)
     this.add('stages', Stages.load(formData.stages))
+    this.add('sections', Sections.load(formData.sections || {}))
     this.add('rows', Rows.load(formData.rows))
     this.add('columns', Columns.load(formData.columns))
     this.add('fields', Fields.load(formData.fields))
@@ -89,6 +93,7 @@ export class Components extends Data {
     return {
       id: this.get('id'),
       stages: StagesData.getData(),
+      sections: SectionsData.getData(),
       rows: RowsData.getData(),
       columns: ColumnsData.getData(),
       fields: FieldsData.getData(),
@@ -96,8 +101,9 @@ export class Components extends Data {
   }
 
   set config(config) {
-    const { stages, rows, columns, fields } = config
+    const { stages, sections, rows, columns, fields } = config
     Stages.config = stages
+    Sections.config = sections
     Rows.config = rows
     Columns.config = columns
     Fields.config = fields
